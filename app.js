@@ -1,10 +1,8 @@
-// app.js
 const express = require('express')
 const cors = require("cors")
 const morgan = require('morgan')
 const err = require('./app/common/err')
 
-const indexRouter = require('./app/routes/index')
 
 // create express app
 const app = express()
@@ -40,8 +38,7 @@ db.mongoose
   })
 
 // routes
-app.use('/', indexRouter)
-app.use('/haiku', require('./app/routes/haiku.routes'))
+require('./app/routes/haiku.routes')(app)
 
 // middleware
 app.use(err.handler)

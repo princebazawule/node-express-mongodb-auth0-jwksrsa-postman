@@ -1,13 +1,16 @@
-const mongoose = require('mongoose')
-const Schema   = mongoose.Schema
+module.exports = (mongoose, mongoosePaginate) => {
+	const haikuSchema = mongoose.Schema(
+		{
+			'line1': String,
+			'line2': String,
+			'line3': String,
+			'author': String
+		}
+	)
 
-const haikuSchema = new Schema({
-	'line1' : String,
-	'line2' : String,
-	'line3' : String,
-	'author' : String
-})
+	haikuSchema.plugin(mongoosePaginate)
 
-haikuSchema.plugin(require('mongoose-paginate'))
+	const Haiku = mongoose.model('haiku', haikuSchema)
 
-module.exports = mongoose.model('haiku', haikuSchema)
+	return Haiku
+}

@@ -1,21 +1,23 @@
-const express = require('express')
-const router = express.Router()
-const haikuController = require('../controllers/haiku.controller')
-const auth = require('../common/auth')
+module.exports = (app) => {
+    const haiku = require('../controllers/haiku.controller')
+    const auth = require('../common/auth')
+    
+    const router = require("express").Router()
 
-// get all haikus
-router.get('/', haikuController.list)
+    // get all haikus
+    router.get('/', haiku.findAll)
 
-// get single haiku
-router.get('/:id', haikuController.show)
+    // get single haiku
+    router.get('/:id', haiku.findOne)
 
-// add new haiku
-router.post('/', auth.check, haikuController.create)
+    // add new haiku
+    router.post('/', auth.check, haiku.createOne)
 
-// update haiku
-router.put('/:id', auth.check, haikuController.update)
+    // update haiku
+    router.put('/:id', auth.check, haiku.updateOne)
 
-// delete haiku
-router.delete('/:id', auth.check, haikuController.remove)
+    // delete haiku
+    router.delete('/:id', auth.check, haiku.deleteOne)
 
-module.exports = router
+    app.use("/haiku", router)
+}
